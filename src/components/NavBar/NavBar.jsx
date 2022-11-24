@@ -30,7 +30,11 @@ function NavBar() {
               Create Playlist
             </NavLink>
           </Button>
-          <Button color="inherit">View all Playlist</Button>
+          <Button color="inherit">
+            <NavLink to="/allplaylists" style={{ textDecoration: "none" }}>
+              View all Playlist
+            </NavLink>
+          </Button>
 
           <Button color="inherit">
             <NavLink to="/signup" style={{ textDecoration: "none" }}>
