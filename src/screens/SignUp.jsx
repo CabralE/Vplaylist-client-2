@@ -2,7 +2,7 @@ import { Container, TextField, Grid, Typography, Button } from "@mui/material";
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "../services/users";
-import { useAuthContext } from "../hooks/useAuthContenxt";
+import { useAuthContext } from "../hooks/useAuthContext";
 // import { useActionData } from "react-router-dom";
 /*
   const { dispatch } = useAuthContext();

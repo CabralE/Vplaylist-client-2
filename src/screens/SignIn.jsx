@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../services/users";
+
 function SignIn() {
   const [user, setUser] = useState({
     email: "",
@@ -16,7 +17,7 @@ function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await signIn(user);
-    navigate("/sign-in", { replace: true });
+    navigate("/", { replace: true });
   };
   return (
     <>

@@ -6,6 +6,7 @@ import "./App.css";
 import Home from "./screens/Home";
 import SignUp from "./screens/SignUp.jsx";
 import SignIn from "./screens/SignIn.jsx";
+import CreatePlaylist from "./screens/CreatePlaylist.jsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/createplaylist" element={<CreatePlaylist />} />
       </Routes>
       <Footer />
     </div>
