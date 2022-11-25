@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import NavBar from "./components/NavBar/NavBar.jsx";
+import Footer from "./components/Footer/Footer.jsx";
+import "./App.css";
+import Home from "./screens/Home";
+import SignUp from "./screens/SignUp.jsx";
+import SignIn from "./screens/SignIn.jsx";
+import CreatePlaylist from "./screens/CreatePlaylist.jsx";
+import AllPlaylists from "./screens/ViewPlaylists";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/createplaylist" element={<CreatePlaylist />} />
+        <Route path="/allplaylists" element={<AllPlaylists />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }
