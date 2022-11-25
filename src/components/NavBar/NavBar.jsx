@@ -25,6 +25,11 @@ function NavBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
+          <Button>
+            <NavLink to="/" style={{ textDecoration: "none" }}>
+              Home
+            </NavLink>
+          </Button>
           <Button color="inherit">
             <NavLink to="/createplaylist" style={{ textDecoration: "none" }}>
               Create Playlist
