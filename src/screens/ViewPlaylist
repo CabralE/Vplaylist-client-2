@@ -1,0 +1,7 @@
+function viewPlaylist() {
+  return (
+    <>
+      <h1>View the playlist here</h1>
+    </>
+  );
+}

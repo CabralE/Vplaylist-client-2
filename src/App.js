@@ -19,6 +19,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/createplaylist" element={<CreatePlaylist />} />
         <Route path="/allplaylists" element={<AllPlaylists />} />
+        <Route path="/playlist/:id" elemental={<ViewPlatlist />} />
       </Routes>
       <Footer />
     </div>

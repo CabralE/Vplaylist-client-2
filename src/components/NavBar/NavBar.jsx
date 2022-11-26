@@ -8,49 +8,21 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
-// import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "../../services/users";
 
 function NavBar() {
   let navigate = useNavigate();
-  // const { user } = useAuthContext();
+  const { user } = useAuthContext();
   const { dispatch } = useAuthContext();
-
-  const isUserLoggedIn = () => {
-    // return user ? isLoggedIn : isNotLoggedIn;
-  };
-
-  function isNotLoggedIn() {
-    return (
-      <>
-        <Button color="inherit">
-          <NavLink to="/signup" style={{ textDecoration: "none" }}>
-            SignUp
-          </NavLink>
-        </Button>
-        <NavLink to="/signin" style={{ textDecoration: "none" }}>
-          <Button color="inherit">Login</Button>
-        </NavLink>
-      </>
-    );
-  }
-
-  function isLoggedIn() {
-    return (
-      <>
-        <NavLink to="/signin" style={{ textDecoration: "none" }}>
-          <Button color="inherit">Logout</Button>
-        </NavLink>
-      </>
-    );
-  }
+  const [userLoggedIn, setuserLoggedIn] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     signOut();
     dispatch({ type: "LOGOUT" });
-    navigate("/signIn", { replace: true });
+    navigate("/", { replace: true });
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -73,6 +45,7 @@ function NavBar() {
               Home
             </NavLink>
           </Button>
+
           <Button color="inherit">
             <NavLink to="/createplaylist" style={{ textDecoration: "none" }}>
               Create Playlist
@@ -84,6 +57,14 @@ function NavBar() {
             </NavLink>
           </Button>
 
+          <form onClick={handleSubmit}>
+            <NavLink to="/" style={{ textDecoration: "none" }}>
+              <Button type="submit" color="inherit">
+                Logout
+              </Button>
+            </NavLink>
+          </form>
+
           <Button color="inherit">
             <NavLink to="/signup" style={{ textDecoration: "none" }}>
               SignUp
@@ -92,13 +73,6 @@ function NavBar() {
           <NavLink to="/signin" style={{ textDecoration: "none" }}>
             <Button color="inherit">Login</Button>
           </NavLink>
-          <form onClick={handleSubmit}>
-            <NavLink to="/" style={{ textDecoration: "none" }}>
-              <Button type="submit" color="inherit">
-                Logout
-              </Button>
-            </NavLink>
-          </form>
         </Toolbar>
       </AppBar>
     </Box>
