@@ -1,6 +1,7 @@
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { postPlaylist } from "../services/playlists";
 
 function CreatePlaylist() {
   let navigate = useNavigate();
@@ -16,16 +17,17 @@ function CreatePlaylist() {
     newState[event.target.name] = event.target.value;
     setPlaylist(newState);
   }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // await signUp(newUser);
-    console.log(user);
     if (!user) {
       navigate("/signin", { replace: true });
     } else {
+      await postPlaylist(playlist);
       navigate("/", { replace: true });
     }
   };
+
   return (
     <>
       <h1>Create a Playlist on this page</h1>

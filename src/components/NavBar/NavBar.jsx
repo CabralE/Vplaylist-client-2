@@ -7,8 +7,23 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "../../services/users";
 
 function NavBar() {
+  let navigate = useNavigate();
+  const { user } = useAuthContext();
+  const { dispatch } = useAuthContext();
+  const [userLoggedIn, setuserLoggedIn] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    signOut();
+    dispatch({ type: "LOGOUT" });
+    navigate("/", { replace: true });
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -30,6 +45,7 @@ function NavBar() {
               Home
             </NavLink>
           </Button>
+
           <Button color="inherit">
             <NavLink to="/createplaylist" style={{ textDecoration: "none" }}>
               Create Playlist
@@ -40,6 +56,14 @@ function NavBar() {
               View all Playlist
             </NavLink>
           </Button>
+
+          <form onClick={handleSubmit}>
+            <NavLink to="/" style={{ textDecoration: "none" }}>
+              <Button type="submit" color="inherit">
+                Logout
+              </Button>
+            </NavLink>
+          </form>
 
           <Button color="inherit">
             <NavLink to="/signup" style={{ textDecoration: "none" }}>

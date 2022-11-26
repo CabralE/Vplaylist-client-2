@@ -3,11 +3,16 @@ import { verifyUser } from "../services/users.js";
 
 export const AuthContext = createContext();
 
+const UserAuthAction = {
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
+};
+
 export const authReducer = (state, action) => {
   switch (action.type) {
-    case "LOGIN":
+    case UserAuthAction.LOGIN:
       return { user: action.payload };
-    case "LOGOUT":
+    case UserAuthAction.LOGOUT:
       return { user: null };
     default:
       return state;

@@ -8,6 +8,7 @@ import SignUp from "./screens/SignUp.jsx";
 import SignIn from "./screens/SignIn.jsx";
 import CreatePlaylist from "./screens/CreatePlaylist.jsx";
 import AllPlaylists from "./screens/ViewPlaylists";
+import ViewPlaylist from "./screens/ViewPlaylist";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/playlist/:id" element={<ViewPlaylist />} />
         <Route path="/createplaylist" element={<CreatePlaylist />} />
         <Route path="/allplaylists" element={<AllPlaylists />} />
       </Routes>
