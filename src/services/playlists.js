@@ -9,3 +9,12 @@ export const allPlaylists = async () => {
     console.log(`allPlaylists error: ${error}`);
   }
 };
+
+export const postPlaylist = async (data) => {
+  try {
+    const response = await api.post("/playlists", data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
