@@ -18,3 +18,13 @@ export const postPlaylist = async (data) => {
     throw error;
   }
 };
+
+export const getPlaylist = async (id) => {
+  try {
+    let response = await api.get(`/playlists/${id}`);
+    let data = await response.data;
+    return data;
+  } catch (error) {
+    console.log(`Fetching playlist error: ` + error);
+  }
+};
