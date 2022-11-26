@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getPlaylist } from "../services/playlists";
+// import Loading from "../components/Loading/Loading";
 
 function ViewPlaylist() {
   const [playlist, setplaylist] = useState(null);
   const { id } = useParams();
-
-  // const handleOnSubmit = (event) => {
-  //   event.preventDefault();
-  //   navigate("/checkout", { state: item });
-  // };
 
   useEffect(() => {
     const fetchPlaylist = async () => {
@@ -23,7 +19,7 @@ function ViewPlaylist() {
   return (
     <>
       <h1>View the playlist here</h1>
-      {playlist ? JSON.stringify(playlist) : "waiting for playlist to load"}
+      {playlist ? JSON.stringify(playlist) : "test"}
     </>
   );
 }

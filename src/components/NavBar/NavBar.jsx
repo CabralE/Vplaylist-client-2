@@ -21,6 +21,7 @@ function NavBar() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     signOut();
+    setuserLoggedIn(false);
     dispatch({ type: "LOGOUT" });
     navigate("/", { replace: true });
   };

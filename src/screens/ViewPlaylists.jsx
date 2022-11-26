@@ -1,5 +1,6 @@
 import { allPlaylists } from "../services/playlists";
 import { useState, useEffect } from "react";
+import Loading from "../components/Loading/Loading";
 
 function AllPlaylists() {
   const [playlists, setPlaylists] = useState(null);
@@ -23,7 +24,7 @@ function AllPlaylists() {
   return (
     <>
       <h1>All of the playlists</h1>
-      <p>{playlists !== null ? JSON.stringify(playlists) : "loading"}</p>
+      <p>{playlists !== null ? JSON.stringify(playlists) : <Loading />}</p>
     </>
   );
 }
