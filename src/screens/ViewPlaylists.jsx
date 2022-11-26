@@ -1,5 +1,6 @@
 import { allPlaylists } from "../services/playlists";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Loading from "../components/Loading/Loading";
 
 function AllPlaylists() {
@@ -21,10 +22,23 @@ function AllPlaylists() {
     };
   }, []);
 
+  const loaded = () => {
+    const playlistData = playlists.map((playlist, index) => (
+      <div key={playlist._id} class="playlist">
+        <Link to={`/playlist/${playlist._id}`}>
+          <h1>{playlist.playlistName}</h1>
+        </Link>
+        <img src={playlist.image} alt={playlist.playlistName} />
+      </div>
+    ));
+    console.log("this is playlistData: ", playlistData);
+    return <div>{playlistData}</div>;
+  };
+
   return (
     <>
       <h1>All of the playlists</h1>
-      <p>{playlists !== null ? JSON.stringify(playlists) : <Loading />}</p>
+      {playlists !== null ? loaded() : <Loading />}
     </>
   );
 }
