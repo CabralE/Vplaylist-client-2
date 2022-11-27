@@ -17,25 +17,30 @@ function ViewPlaylist() {
   }, [id]);
 
   const loaded = () => {
-    console.log("playlist in viewPlaylist", playlist);
+    console.log("playlist in viewPlaylist", playlist.videos[0].videoUrl);
+    const firstVideo = (
+      <div className="main-video">
+        <div className="video">
+          <iframe src={playlist.videos[0].videoUrl}></iframe>
+          <h3>{playlist.videos[0].videoName}</h3>
+        </div>
+      </div>
+    );
     const playlistData = playlist.videos.map((video, index) => (
-      <div key={video._id} class="video">
+      <div key={video._id} class="vid">
+        <iframe width="420" height="315" src={video.videoUrl}></iframe>
         <Link to={`${video.videoUrl}`}>
-          <h1>{video.videoName}</h1>
+          <h3 className="title">{video.videoName}</h3>
         </Link>
-        <iframe
-          width="560"
-          height="315"
-          src={video.videoUrl}
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
       </div>
     ));
 
-    return <div>{playlistData}</div>;
+    return (
+      <div className="container">
+        {firstVideo}
+        {playlistData}
+      </div>
+    );
   };
 
   return (
