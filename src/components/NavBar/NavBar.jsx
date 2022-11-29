@@ -57,6 +57,11 @@ function NavBar() {
               View all Playlist
             </NavLink>
           </Button>
+          <Button color="inherit">
+            <NavLink to="/userplaylists" style={{ textDecoration: "none" }}>
+              View user's Playlists
+            </NavLink>
+          </Button>
 
           <form onClick={handleSubmit}>
             <NavLink to="/" style={{ textDecoration: "none" }}>
