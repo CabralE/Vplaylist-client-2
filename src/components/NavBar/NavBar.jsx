@@ -16,25 +16,12 @@ function NavBar() {
   let navigate = useNavigate();
   const { user } = useAuthContext();
   const { dispatch } = useAuthContext();
-  const [userLoggedIn, setuserLoggedIn] = useState(false);
-  const [toggle, setToggle] = useState(false);
-
-  const SignOut = () => {
-    signOut();
-    dispatch({ type: "LOGOUT" });
-    navigate("/", { replace: true });
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     signOut();
-    setuserLoggedIn(false);
     dispatch({ type: "LOGOUT" });
     navigate("/", { replace: true });
-  };
-
-  const showMore = () => {
-    !toggle ? setToggle(true) : setToggle(false);
   };
 
   function isLoggedIn() {
