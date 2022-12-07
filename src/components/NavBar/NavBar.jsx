@@ -17,6 +17,13 @@ function NavBar() {
   const { user } = useAuthContext();
   const { dispatch } = useAuthContext();
   const [userLoggedIn, setuserLoggedIn] = useState(false);
+  const [toggle, setToggle] = useState(false);
+
+  const SignOut = () => {
+    signOut();
+    dispatch({ type: "LOGOUT" });
+    navigate("/", { replace: true });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,6 +32,50 @@ function NavBar() {
     dispatch({ type: "LOGOUT" });
     navigate("/", { replace: true });
   };
+
+  const showMore = () => {
+    !toggle ? setToggle(true) : setToggle(false);
+  };
+
+  function isLoggedIn() {
+    return (
+      <>
+        <Button color="inherit">
+          <NavLink to="/createplaylist" style={{ textDecoration: "none" }}>
+            Create Playlist
+          </NavLink>
+        </Button>
+        <Button color="inherit">
+          <NavLink to="/userplaylists" style={{ textDecoration: "none" }}>
+            My Playlists
+          </NavLink>
+        </Button>
+        <form onClick={handleSubmit}>
+          <NavLink to="/" style={{ textDecoration: "none" }}>
+            <Button type="submit" color="inherit">
+              Logout
+            </Button>
+          </NavLink>
+        </form>
+      </>
+    );
+  }
+
+  function isLoggedOut() {
+    return (
+      <>
+        <Button color="inherit">
+          <NavLink to="/signup" style={{ textDecoration: "none" }}>
+            SignUp
+          </NavLink>
+        </Button>
+        <NavLink to="/signin" style={{ textDecoration: "none" }}>
+          <Button color="inherit">Login</Button>
+        </NavLink>
+      </>
+    );
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -46,39 +97,12 @@ function NavBar() {
               Home
             </NavLink>
           </Button>
-
-          <Button color="inherit">
-            <NavLink to="/createplaylist" style={{ textDecoration: "none" }}>
-              Create Playlist
-            </NavLink>
-          </Button>
           <Button color="inherit">
             <NavLink to="/allplaylists" style={{ textDecoration: "none" }}>
               View all Playlist
             </NavLink>
           </Button>
-          <Button color="inherit">
-            <NavLink to="/userplaylists" style={{ textDecoration: "none" }}>
-              View user's Playlists
-            </NavLink>
-          </Button>
-
-          <form onClick={handleSubmit}>
-            <NavLink to="/" style={{ textDecoration: "none" }}>
-              <Button type="submit" color="inherit">
-                Logout
-              </Button>
-            </NavLink>
-          </form>
-
-          <Button color="inherit">
-            <NavLink to="/signup" style={{ textDecoration: "none" }}>
-              SignUp
-            </NavLink>
-          </Button>
-          <NavLink to="/signin" style={{ textDecoration: "none" }}>
-            <Button color="inherit">Login</Button>
-          </NavLink>
+          {user ? isLoggedIn() : isLoggedOut()}
         </Toolbar>
       </AppBar>
     </Box>

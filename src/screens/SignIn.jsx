@@ -1,24 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../services/users";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function SignIn() {
-  const [user, setUser] = useState({
+  const { dispatch } = useAuthContext();
+  const { user } = useAuthContext();
+  let navigate = useNavigate();
+
+  const [login, setLogin] = useState({
     email: "",
     password: "",
   });
-  let navigate = useNavigate();
 
   function handleChange(event) {
-    const newState = { ...user };
+    const newState = { ...login };
     newState[event.target.name] = event.target.value;
-    setUser(newState);
+    setLogin(newState);
   }
+
+  useEffect(() => {
+    const checkSignIn = () => {
+      if (user) {
+        navigate("/", { replace: true });
+      }
+    };
+    checkSignIn();
+  }, [user]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await signIn(user);
+    const user = await signIn(login);
+    dispatch({ type: "LOGIN", payload: user });
     navigate("/", { replace: true });
   };
+
   return (
     <>
       This is the Sign-in Page
@@ -27,14 +43,14 @@ function SignIn() {
           type="text"
           placeholder="email"
           name="email"
-          value={user.email}
+          value={login.email}
           onChange={handleChange}
         />
         <input
           type="text"
           placeholder="password"
           name="password"
-          value={user.password}
+          value={login.password}
           onChange={handleChange}
         />
         <button type="submit">Submit</button>
