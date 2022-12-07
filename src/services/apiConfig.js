@@ -8,8 +8,9 @@ const getToken = () => {
 
 //http://localhost:3001/api
 //https://ec-vlist-server.herokuapp.com
+//https://vplayserver-production.up.railway.app
 const api = axios.create({
-  baseURL: "https://ec-vlist-server.herokuapp.com",
+  baseURL: "https://vplayserver-production.up.railway.app",
 });
 
 api.interceptors.request.use(

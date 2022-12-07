@@ -12,7 +12,6 @@ function ViewPlaylist() {
     const fetchPlaylist = async () => {
       const response = await getPlaylist(id);
       setplaylist(response);
-      console.log(response);
     };
     fetchPlaylist();
   }, [id]);
