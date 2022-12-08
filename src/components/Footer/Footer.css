@@ -35,7 +35,7 @@ li:hover ~ li p {
 
 footer {
   display: flex;
-  height: 10vh;
+  height: 8vh;
   width: 100%;
   background-color: #002a38;
   line-height: 1.3;
