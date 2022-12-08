@@ -1,7 +1,12 @@
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postPlaylist } from "../../services/playlists";
+import {
+  allPlaylists,
+  getPlaylist,
+  postPlaylist,
+} from "../../services/playlists";
+import { updateUserPlaylists } from "../../services/users";
 import "./CreatePlaylist.css";
 
 function CreatePlaylist() {
@@ -17,6 +22,7 @@ function CreatePlaylist() {
     const newState = { ...playlist };
     newState[event.target.name] = event.target.value;
     setPlaylist(newState);
+    console.log(user.id);
   }
 
   const handleSubmit = async (event) => {
@@ -25,6 +31,16 @@ function CreatePlaylist() {
       navigate("/signin", { replace: true });
     } else {
       await postPlaylist(playlist);
+      const allOfThePlaylists = await allPlaylists();
+      const lastPlaylist = await allOfThePlaylists[
+        allOfThePlaylists.length - 1
+      ];
+      const arrOfPlaylists = await user.playlists;
+      await arrOfPlaylists.push(lastPlaylist);
+      user.playlists = await arrOfPlaylists;
+      console.log(user, "userPlaylist:", user.playlists);
+      await updateUserPlaylists(user.id, `${user.playlists}`);
+      console.log(user);
       navigate("/", { replace: true });
     }
   };
@@ -35,7 +51,12 @@ function CreatePlaylist() {
         <h1 className="title">Create a Playlist</h1>
         <form onSubmit={handleSubmit}>
           <div className="inputbox">
-            <input type="text" onChange={handleChange} required="required" />
+            <input
+              type="text"
+              name="playlistName"
+              onChange={handleChange}
+              required="required"
+            />
             <span>Name</span>
           </div>
           <div className="inputbox">

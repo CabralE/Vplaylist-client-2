@@ -72,6 +72,17 @@ export const getUser = async (id) => {
   }
 };
 
+export const updateUserPlaylists = async (credentials, data) => {
+  try {
+    const user = await getUser(credentials);
+    user.playlists.push(data);
+    const response = await api.put(`/user/${credentials}`, user.playlists);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //for Dev purposes
 export const getUsername = async (name) => {
   try {
