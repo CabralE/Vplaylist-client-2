@@ -32,7 +32,7 @@ function AllPlaylists() {
       </div>
     ));
     console.log("this is playlistData: ", playlistData);
-    return <div>{playlistData}</div>;
+    return <div className="allPlaylistsContainer">{playlistData}</div>;
   };
 
   return (

@@ -1,10 +1,20 @@
 .App {
   text-align: center;
+  position: relative;
+  min-height: 100vh;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.Routes {
+  padding-bottom: 10vh;
+}
+
+#Routes {
+  padding-bottom: 10vh;
 }
 
 @media (prefers-reduced-motion: no-preference) {
