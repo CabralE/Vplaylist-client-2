@@ -1,5 +1,5 @@
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   allPlaylists,
@@ -8,6 +8,7 @@ import {
 } from "../../services/playlists";
 import { updateUserPlaylists } from "../../services/users";
 import "./CreatePlaylist.css";
+import axios from "axios";
 
 function CreatePlaylist() {
   let navigate = useNavigate();
@@ -17,12 +18,12 @@ function CreatePlaylist() {
     playlistTag: "",
     image: "",
   });
+  const [submitted, setSubmitted] = useState(false);
 
   function handleChange(event) {
     const newState = { ...playlist };
     newState[event.target.name] = event.target.value;
     setPlaylist(newState);
-    console.log(user.id);
   }
 
   const handleSubmit = async (event) => {
@@ -30,20 +31,26 @@ function CreatePlaylist() {
     if (!user) {
       navigate("/signin", { replace: true });
     } else {
+      //setSubmitted(true);
       await postPlaylist(playlist);
-      const allOfThePlaylists = await allPlaylists();
-      const lastPlaylist = await allOfThePlaylists[
-        allOfThePlaylists.length - 1
-      ];
-      const arrOfPlaylists = await user.playlists;
-      await arrOfPlaylists.push(lastPlaylist);
-      user.playlists = await arrOfPlaylists;
-      console.log(user, "userPlaylist:", user.playlists);
-      await updateUserPlaylists(user.id, `${user.playlists}`);
-      console.log(user);
+      // const allData = await allPlaylists();
+      // const lastPlaylist = await allData[allData.length - 1];
+      // const id = user.id;
+      // const URL = `https://vplayserver-production.up.railway.app/user/${id}`
+      console.log(submitted);
       navigate("/", { replace: true });
     }
   };
+
+  useEffect(() => {
+    axios({
+      method: "put",
+      url: `https://vplayserver-production.up.railway.app/user/63926940e338931c74a86194`,
+      data: {
+        playlists: ["63926940e338931c74a8619a"],
+      },
+    });
+  }, [submitted]);
 
   return (
     <div className="createplaylistbody">
