@@ -24,14 +24,13 @@ function AllPlaylists() {
 
   const loaded = () => {
     const playlistData = playlists.map((playlist, index) => (
-      <div key={playlist._id} class="playlist">
+      <div key={playlist._id} className="playlist">
         <Link to={`/playlist/${playlist._id}`}>
           <h1>{playlist.playlistName}</h1>
         </Link>
         <img src={playlist.image} alt={playlist.playlistName} />
       </div>
     ));
-    console.log("this is playlistData: ", playlistData);
     return <div className="allPlaylistsContainer">{playlistData}</div>;
   };
 

@@ -1,12 +1,7 @@
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  allPlaylists,
-  getPlaylist,
-  postPlaylist,
-} from "../../services/playlists";
-import { updateUserPlaylists } from "../../services/users";
+import { allPlaylists, postPlaylist } from "../../services/playlists";
 import "./CreatePlaylist.css";
 import axios from "axios";
 
@@ -18,7 +13,6 @@ function CreatePlaylist() {
     playlistTag: "",
     image: "",
   });
-  const [submitted, setSubmitted] = useState(false);
 
   function handleChange(event) {
     const newState = { ...playlist };
@@ -31,26 +25,26 @@ function CreatePlaylist() {
     if (!user) {
       navigate("/signin", { replace: true });
     } else {
-      //setSubmitted(true);
       await postPlaylist(playlist);
-      // const allData = await allPlaylists();
-      // const lastPlaylist = await allData[allData.length - 1];
-      // const id = user.id;
-      // const URL = `https://vplayserver-production.up.railway.app/user/${id}`
-      console.log(submitted);
+      let userPlaylists = user.playlists;
+      let dataAllPlaylist = await allPlaylists();
+      let lastPlaylist = dataAllPlaylist[dataAllPlaylist.length - 1];
+      userPlaylists.push(lastPlaylist);
+      let playlistId = [];
+      userPlaylists.forEach((playlist) => {
+        playlistId.push(playlist._id);
+      });
+      axios({
+        method: "put",
+        url: `https://vplayserver-production.up.railway.app/user/${user.id}`,
+        data: {
+          playlists: [...playlistId],
+        },
+      });
+
       navigate("/", { replace: true });
     }
   };
-
-  useEffect(() => {
-    axios({
-      method: "put",
-      url: `https://vplayserver-production.up.railway.app/user/63926940e338931c74a86194`,
-      data: {
-        playlists: ["63926940e338931c74a8619a"],
-      },
-    });
-  }, [submitted]);
 
   return (
     <div className="createplaylistbody">
