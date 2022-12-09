@@ -72,6 +72,15 @@ export const getUser = async (id) => {
   }
 };
 
+export const updateUserPlaylists = async (credentials, data) => {
+  try {
+    const response = await api.put(`/user/${credentials}`, data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //for Dev purposes
 export const getUsername = async (name) => {
   try {
@@ -87,7 +96,7 @@ export const getUsername = async (name) => {
 //for Dev purposes
 export const updateUser = async (credentials, data) => {
   try {
-    const resp = await api.put(`/users/id/${credentials}`, data);
+    const resp = await api.put(`/user/${credentials}`, data);
     return resp.data;
   } catch (error) {
     throw error;

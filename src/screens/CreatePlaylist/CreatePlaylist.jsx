@@ -1,8 +1,9 @@
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postPlaylist } from "../../services/playlists";
+import { allPlaylists, postPlaylist } from "../../services/playlists";
 import "./CreatePlaylist.css";
+import axios from "axios";
 
 function CreatePlaylist() {
   let navigate = useNavigate();
@@ -25,6 +26,22 @@ function CreatePlaylist() {
       navigate("/signin", { replace: true });
     } else {
       await postPlaylist(playlist);
+      let userPlaylists = user.playlists;
+      let dataAllPlaylist = await allPlaylists();
+      let lastPlaylist = dataAllPlaylist[dataAllPlaylist.length - 1];
+      userPlaylists.push(lastPlaylist);
+      let playlistId = [];
+      userPlaylists.forEach((playlist) => {
+        playlistId.push(playlist._id);
+      });
+      axios({
+        method: "put",
+        url: `https://vplayserver-production.up.railway.app/user/${user.id}`,
+        data: {
+          playlists: [...playlistId],
+        },
+      });
+
       navigate("/", { replace: true });
     }
   };
@@ -35,7 +52,12 @@ function CreatePlaylist() {
         <h1 className="title">Create a Playlist</h1>
         <form onSubmit={handleSubmit}>
           <div className="inputbox">
-            <input type="text" onChange={handleChange} required="required" />
+            <input
+              type="text"
+              name="playlistName"
+              onChange={handleChange}
+              required="required"
+            />
             <span>Name</span>
           </div>
           <div className="inputbox">

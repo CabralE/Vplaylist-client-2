@@ -6,7 +6,6 @@ function Home() {
   const fetchData = async () => {
     const item = await JSON.parse(localStorage.getItem("name"));
     if (item) setuserLoggedIn(!userLoggedIn);
-    console.log("fetchedData!", `${item}`, { userLoggedIn });
   };
 
   useEffect(() => {

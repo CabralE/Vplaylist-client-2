@@ -1,6 +1,4 @@
 import "./Footer.css";
-import { Container, Box, Grid } from "@mui/material";
-import Icon from "@mui/material/Icon";
 
 function Footer() {
   return (
