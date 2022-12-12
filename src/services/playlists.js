@@ -28,3 +28,21 @@ export const getPlaylist = async (id) => {
     console.log(`Fetching playlist error: ` + error);
   }
 };
+
+export const updatePlaylist = async (id, playlist) => {
+  try {
+    const response = await api.put(`/playlist/${id}`, playlist);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deletePlaylist = async (id) => {
+  try {
+    let response = await api.delete(`/playlists/${id}`);
+    return response;
+  } catch (error) {
+    console.log(`Deleting playlist error: ${error}`);
+  }
+};

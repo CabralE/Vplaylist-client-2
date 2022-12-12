@@ -2,16 +2,29 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import Loading from "../../components/Loading/Loading.js";
 import "./UserPlaylists.css";
 import { Link } from "react-router-dom";
+import { deletePlaylist } from "../../services/playlists";
 
 function UserPlaylists() {
   const { user } = useAuthContext();
+
+  const deleteBtn = (id) => {
+    return (
+      <button className="deleteButton" onClick={() => deletePlaylist(id)}>
+        delete
+      </button>
+    );
+  };
+
+  const updateBtn = () => {
+    return <button className="deleteButton"></button>;
+  };
 
   const loaded = () => {
     let userPlaylists = user.playlists;
     const arr = userPlaylists.map((playlist, index) => {
       return (
-        <Link to={`/playlist/${playlist._id}`}>
-          <div className="playlist" key={index}>
+        <div className="playlist" key={index}>
+          <Link to={`/playlist/${playlist._id}`}>
             <img
               width="100px"
               height="100px"
@@ -23,8 +36,11 @@ function UserPlaylists() {
             />
             <p>{playlist.playlistName}</p>
             <p>{playlist.playlistTag}</p>
-          </div>
-        </Link>
+          </Link>
+          <button className="" onClick={() => deletePlaylist(playlist._id)}>
+            delete button
+          </button>
+        </div>
       );
     });
 
@@ -35,38 +51,7 @@ function UserPlaylists() {
       </>
     );
   };
-  /*
- 
-  const delay = (duration) => {
-    return new Promise((res) => {
-      setTimeout(res, duration);
-    });
-  };
 
-  const loaded = () => {
-    const userPlaylistsData = playlists.playlists.map((playlist) => {
-      {
-        console.log("playlist:", playlist);
-      }
-      <div key={playlist._id}>
-        <h3>{playlist.playlistName}</h3>
-        <h1>hi</h1>
-      </div>;
-    });
-
-    return <div>{userPlaylistsData}</div>;
-  };
-
-  useEffect(() => {
-    const fetchPlaylists = async () => {
-      await delay(1500);
-      setplaylists(user);
-    };
-    return () => {
-      fetchPlaylists();
-    };
-  }, [user]);
-  */
   return (
     <>
       <h1>This will be the user's playlists</h1>

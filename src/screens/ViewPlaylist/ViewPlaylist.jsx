@@ -11,12 +11,14 @@ function ViewPlaylist() {
   useEffect(() => {
     const fetchPlaylist = async () => {
       const response = await getPlaylist(id);
+
       setplaylist(response);
     };
     fetchPlaylist();
   }, [id]);
 
   const loaded = () => {
+    console.log(playlist);
     const firstVideo = (
       <div className="main-video">
         <div className="video">
@@ -24,14 +26,20 @@ function ViewPlaylist() {
             width="100%"
             src="https://www.youtube.com/embed/tgbNymZ7vqY"
           ></iframe>
-          <h3 className="title">{playlist.videos[0].videoName}</h3>
+          <h3 className="title">
+            {playlist.videos[0].videoName != null
+              ? playlist.videos[0].videoName
+              : "No video name"}
+          </h3>
         </div>
       </div>
     );
     const playlistData = playlist.videos.map((video, index) => (
       <div key={video._id} className="vid">
         <iframe src={video.videoUrl}></iframe>
-        <h3 className="title">{video.videoName}</h3>
+        <h3 className="title">
+          {video.videoName ? video.videoName : "no video name"}
+        </h3>
       </div>
     ));
 
@@ -58,9 +66,9 @@ function ViewPlaylist() {
 
     return (
       <div className="container">
-        {firstVideo}
+        {playlist ? firstVideo : <p>no data</p>}
         <div className="video-list">
-          {playlistData}
+          {playlistData ? playlistData : <p>no playlistData</p>}
           {dummyData}
         </div>
       </div>
@@ -70,6 +78,10 @@ function ViewPlaylist() {
   return (
     <body>
       <h1 className="heading">Playlist Gallery</h1>
+      <Link to={`/playlist/${id}/edit`}>
+        <button>Edit Playlist</button>
+      </Link>
+
       {playlist ? loaded() : <Loading />}
     </body>
   );
