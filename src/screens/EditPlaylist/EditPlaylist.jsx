@@ -28,6 +28,7 @@ function EditPlaylist() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    console.log(event);
     setEditPlaylist({
       ...editPlaylist,
       [name]: value,
