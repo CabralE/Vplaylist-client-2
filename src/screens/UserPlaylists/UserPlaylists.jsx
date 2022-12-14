@@ -1,10 +1,13 @@
 import { useAuthContext } from "../../hooks/useAuthContext";
 import Loading from "../../components/Loading/Loading.js";
 import "./UserPlaylists.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deletePlaylist } from "../../services/playlists";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 function UserPlaylists() {
+  let navigate = useNavigate();
   const { user } = useAuthContext();
 
   const deleteBtn = (id) => {
@@ -17,6 +20,29 @@ function UserPlaylists() {
 
   const updateBtn = () => {
     return <button className="deleteButton"></button>;
+  };
+
+  const handleDelete = async (id) => {
+    let usersPlaylists = false;
+    user?.playlists.forEach((playlist) => {
+      if (playlist._id === id) usersPlaylists = true;
+    });
+    if (!user) {
+      navigate("/signin", { replace: true });
+    } else if (usersPlaylists === false) {
+      navigate("/createplaylist", { replace: true });
+    } else {
+      deletePlaylist(id);
+      navigate("/", { replace: true });
+    }
+  };
+
+  const handleEdit = async (id) => {
+    if (!user) {
+      navigate("/signin", { replace: true });
+    } else {
+      navigate(`/playlist/${id}/edit`);
+    }
   };
 
   const loaded = () => {
@@ -37,8 +63,11 @@ function UserPlaylists() {
             <p>{playlist.playlistName}</p>
             <p>{playlist.playlistTag}</p>
           </Link>
-          <button className="" onClick={() => deletePlaylist(playlist._id)}>
-            delete button
+          <button className="" onClick={() => handleDelete(playlist._id)}>
+            Delete Playlist
+          </button>
+          <button className="" onClick={() => handleEdit(playlist._id)}>
+            Edit Playlist
           </button>
         </div>
       );

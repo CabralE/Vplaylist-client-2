@@ -1,4 +1,5 @@
 import api from "./apiConfig";
+import axios from "axios";
 
 export const allPlaylists = async () => {
   try {
@@ -40,8 +41,13 @@ export const updatePlaylist = async (id, playlist) => {
 
 export const deletePlaylist = async (id) => {
   try {
-    let response = await api.delete(`/playlists/${id}`);
-    return response;
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
+    axios.delete(
+      `https://vplayserver-production.up.railway.app/playlists/${id}`,
+      { headers }
+    );
   } catch (error) {
     console.log(`Deleting playlist error: ${error}`);
   }
