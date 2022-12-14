@@ -10,6 +10,7 @@ import CreatePlaylist from "./screens/CreatePlaylist/CreatePlaylist.jsx";
 import AllPlaylists from "./screens/ViewPlaylists";
 import ViewPlaylist from "./screens/ViewPlaylist/ViewPlaylist";
 import UserPlaylists from "./screens/UserPlaylists/UserPlaylists.jsx";
+import EditPlaylist from "./screens/EditPlaylist/EditPlaylist.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/playlist/:id" element={<ViewPlaylist />} />
         <Route path="/createplaylist" element={<CreatePlaylist />} />
+        <Route path="/playlist/:id/edit" element={<EditPlaylist />} />
         <Route path="/allplaylists" element={<AllPlaylists />} />
         <Route path="/userplaylists" element={<UserPlaylists />} />
       </Routes>

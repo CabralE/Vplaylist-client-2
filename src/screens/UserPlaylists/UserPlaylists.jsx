@@ -1,17 +1,56 @@
 import { useAuthContext } from "../../hooks/useAuthContext";
 import Loading from "../../components/Loading/Loading.js";
 import "./UserPlaylists.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { deletePlaylist } from "../../services/playlists";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 function UserPlaylists() {
+  let navigate = useNavigate();
   const { user } = useAuthContext();
+
+  const deleteBtn = (id) => {
+    return (
+      <button className="deleteButton" onClick={() => deletePlaylist(id)}>
+        delete
+      </button>
+    );
+  };
+
+  const updateBtn = () => {
+    return <button className="deleteButton"></button>;
+  };
+
+  const handleDelete = async (id) => {
+    let usersPlaylists = false;
+    user?.playlists.forEach((playlist) => {
+      if (playlist._id === id) usersPlaylists = true;
+    });
+    if (!user) {
+      navigate("/signin", { replace: true });
+    } else if (usersPlaylists === false) {
+      navigate("/createplaylist", { replace: true });
+    } else {
+      deletePlaylist(id);
+      navigate("/", { replace: true });
+    }
+  };
+
+  const handleEdit = async (id) => {
+    if (!user) {
+      navigate("/signin", { replace: true });
+    } else {
+      navigate(`/playlist/${id}/edit`);
+    }
+  };
 
   const loaded = () => {
     let userPlaylists = user.playlists;
     const arr = userPlaylists.map((playlist, index) => {
       return (
-        <Link to={`/playlist/${playlist._id}`}>
-          <div className="playlist" key={index}>
+        <div className="playlist" key={index}>
+          <Link to={`/playlist/${playlist._id}`}>
             <img
               width="100px"
               height="100px"
@@ -23,8 +62,14 @@ function UserPlaylists() {
             />
             <p>{playlist.playlistName}</p>
             <p>{playlist.playlistTag}</p>
-          </div>
-        </Link>
+          </Link>
+          <button className="" onClick={() => handleDelete(playlist._id)}>
+            Delete Playlist
+          </button>
+          <button className="" onClick={() => handleEdit(playlist._id)}>
+            Edit Playlist
+          </button>
+        </div>
       );
     });
 
@@ -35,38 +80,7 @@ function UserPlaylists() {
       </>
     );
   };
-  /*
- 
-  const delay = (duration) => {
-    return new Promise((res) => {
-      setTimeout(res, duration);
-    });
-  };
 
-  const loaded = () => {
-    const userPlaylistsData = playlists.playlists.map((playlist) => {
-      {
-        console.log("playlist:", playlist);
-      }
-      <div key={playlist._id}>
-        <h3>{playlist.playlistName}</h3>
-        <h1>hi</h1>
-      </div>;
-    });
-
-    return <div>{userPlaylistsData}</div>;
-  };
-
-  useEffect(() => {
-    const fetchPlaylists = async () => {
-      await delay(1500);
-      setplaylists(user);
-    };
-    return () => {
-      fetchPlaylists();
-    };
-  }, [user]);
-  */
   return (
     <>
       <h1>This will be the user's playlists</h1>
