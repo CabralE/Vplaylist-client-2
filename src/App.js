@@ -11,6 +11,7 @@ import AllPlaylists from "./screens/ViewPlaylists";
 import ViewPlaylist from "./screens/ViewPlaylist/ViewPlaylist";
 import UserPlaylists from "./screens/UserPlaylists/UserPlaylists.jsx";
 import EditPlaylist from "./screens/EditPlaylist/EditPlaylist.jsx";
+import Video from "./screens/Video/Video.jsx";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/playlist/:id/edit" element={<EditPlaylist />} />
         <Route path="/allplaylists" element={<AllPlaylists />} />
         <Route path="/userplaylists" element={<UserPlaylists />} />
+        <Route path="/video" element={<Video />} />
       </Routes>
       <Footer />
     </div>
