@@ -28,6 +28,11 @@ function NavBar() {
     return (
       <>
         <Button color="inherit">
+          <NavLink to="/video" style={{ textDecoration: "none" }}>
+            Search
+          </NavLink>
+        </Button>
+        <Button color="inherit">
           <NavLink to="/createplaylist" style={{ textDecoration: "none" }}>
             Create Playlist
           </NavLink>
