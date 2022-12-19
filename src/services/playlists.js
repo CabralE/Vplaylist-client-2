@@ -32,7 +32,11 @@ export const getPlaylist = async (id) => {
 
 export const updatePlaylist = async (id, playlist) => {
   try {
-    const response = await api.put(`/playlist/${id}`, playlist);
+    // const article = { videos: playlist };
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
+    const response = await api.put(`/playlists/${id}`, playlist, { headers });
     return response.data;
   } catch (error) {
     throw error;

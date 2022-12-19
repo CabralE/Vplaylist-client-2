@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { searchYoutube } from "../../services/video.js";
+import {
+  searchYoutube,
+  postVideo,
+  getAllVideos,
+} from "../../services/video.js";
+import { updatePlaylist } from "../../services/playlists.js";
 import Loading from "../../components/Loading/Loading.js";
 import "./Video.css";
 import maginifysvg from "./magnify.svg";
 import { useAuthContext } from "../../hooks/useAuthContext.js";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Video() {
   const { user } = useAuthContext();
@@ -15,6 +21,8 @@ function Video() {
   });
   const [data, setData] = useState(null);
 
+  const [playlist, setPlaylist] = useState({});
+
   const [video, setVideo] = useState({
     videoName: "",
     videoUrl: "",
@@ -22,72 +30,115 @@ function Video() {
   });
 
   function handleChange(event) {
-    const newState = { ...search };
+    let newState = { ...search };
     newState[event.target.name] = event.target.value;
     setSearch(newState);
   }
 
+  const handleChangePlaylist = (event) => {
+    let selectedPlaylist = user.playlists.filter(
+      (arr) => arr.playlistName === event.target.value
+    );
+    setPlaylist(selectedPlaylist);
+  };
+
   const handleYoutubeSearch = async (event) => {
     event.preventDefault();
-    const data = await searchYoutube(search);
-    console.log("handleYoutubeSearch: ", data);
+    const data = await searchYoutube(search.word);
     setData(data);
   };
 
-  function handleVideoSelection(event) {
+  const handleVideoSelection = (individualData) => {
     const newState = {
-      videoName: data.items[event].snippet.title,
-      videoUrl: `https://www.youtube.com/embed/${data.items[event].id.videoId}`,
-      videoChannel: data.items[event].snippet.channelTitle,
+      videoName: individualData.snippet.title,
+      videoUrl: `https://www.youtube.com/embed/${individualData.id.videoId}`,
+      videoChannel: individualData.snippet.channelTitle,
     };
     setVideo(newState);
-  }
+  };
 
   const handlePostingVideo = async (event) => {
     event.preventDefault();
+    let uniqueKey = await event.target.id;
+    let uniqueItem = await data.items[uniqueKey];
+
+    // make post request to video
+    handleVideoSelection(uniqueItem);
+    setTimeout(() => {
+      postVideo(video);
+    }, 500);
+    // await postVideo(video);
+
+    // make get request to video
+    let allVideos = await getAllVideos();
+    let lastVideoPosted = await allVideos[allVideos.length - 1];
+
+    // make put request to playlist, then insert unique video id
+    let arr = playlist[0]?.videos;
+    arr.push(lastVideoPosted._id);
+    const addVideoId = { videos: arr };
+    await updatePlaylist(playlist[0]._id, addVideoId);
   };
 
   const loaded = () => {
-    const usersPlaylist = user.playlists.map((playlist, index) => {
-      const {} = playlist;
-      return <option value={index}>{playlist.playlistName}</option>;
-    });
-
     const searchResult = data.items.map((search, index) => {
       return (
-        <article className="video-container">
-          <iframe
-            key={index}
-            src={`https://www.youtube.com/embed/${search.id.videoId}`}
-            frameborder="0"
-            allowfullscreen
-          ></iframe>
-          <div className="video-bottom-section">
-            <img
-              className="channel-icon"
-              src={
-                search.snippet.thumbnails.default ||
-                `http://unsplash.it/250/150?gravity=center`
-              }
-            />
+        <div key={index}>
+          <article className="video-container">
+            <iframe
+              src={`https://www.youtube.com/embed/${search.id.videoId}`}
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+            <div className="video-bottom-section">
+              <img
+                className="channel-icon"
+                src={
+                  search.snippet.thumbnails.default ||
+                  `http://unsplash.it/250/150?gravity=center`
+                }
+              />
 
-            <div className="video-details">
-              <p className="video-title">{search.snippet.title}</p>
-              <p className="video-channel-name">
-                {search.snippet.channelTitle}
-              </p>
-              <div className="video-metadata">
-                <span>12k views</span>-<span>1 week ago</span>
+              <div className="video-details">
+                <p className="video-title">{search.snippet.title}</p>
+                <p className="video-channel-name">
+                  {search.snippet.channelTitle}
+                </p>
+                <div className="video-metadata">
+                  <span>12k views</span>-<span>1 week ago</span>
+                </div>
               </div>
             </div>
-          </div>
-          <form onclick={handlePostingVideo}>
-            <select value={index}>{usersPlaylist}</select>
-            <button type="submit"> Add to Playlist</button>
-          </form>
-        </article>
+            <form onClick={handlePostingVideo}>
+              <input
+                list="playlist-options"
+                name="browser"
+                id="browser"
+                placeholder="Choose a Playlist"
+                onChange={handleChangePlaylist}
+                required
+              ></input>
+              <datalist id="playlist-options">
+                {user.playlists.map((playlist, playlistIndex) => {
+                  return (
+                    <option
+                      value={playlist.playlistName}
+                      key={playlistIndex}
+                      id={playlistIndex}
+                    />
+                  );
+                })}
+              </datalist>
+
+              <button key={index} id={index} className={index} type="submit">
+                Add to Playlist
+              </button>
+            </form>
+          </article>
+        </div>
       );
     });
+
     return (
       <div className="videos">
         <section className="video-section">{searchResult}</section>
