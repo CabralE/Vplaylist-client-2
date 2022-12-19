@@ -21,6 +21,8 @@ function Video() {
   });
   const [data, setData] = useState(null);
 
+  const [playlist, setPlaylist] = useState({});
+
   const [video, setVideo] = useState({
     videoName: "",
     videoUrl: "",
@@ -32,6 +34,13 @@ function Video() {
     newState[event.target.name] = event.target.value;
     setSearch(newState);
   }
+
+  const handleChangePlaylist = (event) => {
+    let selectedPlaylist = user.playlists.filter(
+      (arr) => arr.playlistName === event.target.value
+    );
+    setPlaylist(selectedPlaylist);
+  };
 
   const handleYoutubeSearch = async (event) => {
     event.preventDefault();
@@ -52,46 +61,26 @@ function Video() {
     event.preventDefault();
     let uniqueKey = await event.target.id;
     let uniqueItem = await data.items[uniqueKey];
+
     // make post request to video
     handleVideoSelection(uniqueItem);
-    await postVideo(video);
+    setTimeout(() => {
+      postVideo(video);
+    }, 500);
+    // await postVideo(video);
+
     // make get request to video
     let allVideos = await getAllVideos();
     let lastVideoPosted = await allVideos[allVideos.length - 1];
+
     // make put request to playlist, then insert unique video id
-    // user.playlists[uniqueKey].videos.push(lastVideoPosted.id);
-    // const article = { videos: `${user.playlists[uniqueKey].videos}` };
-    // const headers = {
-    //   Authorization: `Bearer ${localStorage.getItem("token")}`,
-    // };
-    // axios.put(
-    //   `https://vplayserver-production.up.railway.app/playlists/${user.playlists[uniqueKey]}`,
-    //   article,
-    //   { headers }
-    // );
-    // await updatePlaylist(user.playlists[uniqueKey]._id, {
-    //   playlists: user.playlists[uniqueKey],
-    // });
-    // console.log(lastVideoPosted);
-    // console.log("user; playlist; videos", user.playlists[uniqueKey]);
-    // await updatePlaylist(user.playlists[uniqueKey], {
-    //   videos: lastVideoPosted._id,
-    // });
+    let arr = playlist[0]?.videos;
+    arr.push(lastVideoPosted._id);
+    const addVideoId = { videos: arr };
+    await updatePlaylist(playlist[0]._id, addVideoId);
   };
 
   const loaded = () => {
-    const usersPlaylist = user.playlists.map((playlist, index) => {
-      return (
-        <option value={index} key={index}>
-          {playlist.playlistName}
-        </option>
-      );
-    });
-
-    function handleChangeOptions(event) {
-      console.log(event);
-    }
-
     const searchResult = data.items.map((search, index) => {
       return (
         <div key={index}>
@@ -121,9 +110,26 @@ function Video() {
               </div>
             </div>
             <form onClick={handlePostingVideo}>
-              <select value={search} onChange={handleChangeOptions()}>
-                {usersPlaylist}
-              </select>
+              <input
+                list="playlist-options"
+                name="browser"
+                id="browser"
+                placeholder="Choose a Playlist"
+                onChange={handleChangePlaylist}
+                required
+              ></input>
+              <datalist id="playlist-options">
+                {user.playlists.map((playlist, playlistIndex) => {
+                  return (
+                    <option
+                      value={playlist.playlistName}
+                      key={playlistIndex}
+                      id={playlistIndex}
+                    />
+                  );
+                })}
+              </datalist>
+
               <button key={index} id={index} className={index} type="submit">
                 Add to Playlist
               </button>
