@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./Home.css";
 
 function Home() {
   const [userLoggedIn, setuserLoggedIn] = useState(false);
@@ -12,7 +13,14 @@ function Home() {
     fetchData();
   }, [setuserLoggedIn]);
 
-  return <div>This is the Home Page!</div>;
+  return (
+    <>
+      <h2>Home Page</h2>
+      <section>Section One</section>
+      <section>Section two</section>
+      <section>Section three</section>
+    </>
+  );
 }
 
 export default Home;

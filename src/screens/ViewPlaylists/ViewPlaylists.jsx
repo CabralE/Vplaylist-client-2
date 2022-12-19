@@ -1,7 +1,7 @@
-import { allPlaylists } from "../services/playlists";
+import { allPlaylists } from "../../services/playlists";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Loading from "../components/Loading/Loading";
+import Loading from "../../components/Loading/Loading";
 
 function AllPlaylists() {
   const [playlists, setPlaylists] = useState(null);
