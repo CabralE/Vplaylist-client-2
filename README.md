@@ -16,7 +16,7 @@ Backend Github Repo: https://github.com/CabralE/VplayServer
 
 ---
 
-### Tech Stack:
+### Tech Stack
 
 - React
 - Node.JS
@@ -24,7 +24,7 @@ Backend Github Repo: https://github.com/CabralE/VplayServer
 - HTML
 - CSS
 - MongoDB(NoSQL)
-- Mongo
+- Mongoose
 - Railways (BaaS)
 - Netlify (FaaS)
 - git

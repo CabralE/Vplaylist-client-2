@@ -82,7 +82,7 @@ function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            EC
           </Typography>
           <Button>
             <NavLink to="/" style={{ textDecoration: "none" }}>
