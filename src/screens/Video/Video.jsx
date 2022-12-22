@@ -109,7 +109,7 @@ function Video() {
                 </div>
               </div>
             </div>
-            <form onClick={handlePostingVideo}>
+            <form>
               <input
                 list="playlist-options"
                 name="browser"
@@ -130,7 +130,13 @@ function Video() {
                 })}
               </datalist>
 
-              <button key={index} id={index} className={index} type="submit">
+              <button
+                key={index}
+                id={index}
+                className={index}
+                type="submit"
+                onClick={handlePostingVideo}
+              >
                 Add to Playlist
               </button>
             </form>
