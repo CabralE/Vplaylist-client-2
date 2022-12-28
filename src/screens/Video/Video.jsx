@@ -57,23 +57,26 @@ function Video() {
     setVideo(newState);
   };
 
+  async function sleep(time = 1) {
+    const sleepMilliseconds = time * 1000;
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(`Slept for: ${sleepMilliseconds}ms`);
+      }, sleepMilliseconds);
+    });
+  }
+
   const handlePostingVideo = async (event) => {
     event.preventDefault();
     let uniqueKey = await event.target.id;
     let uniqueItem = await data.items[uniqueKey];
-
-    // make post request to video
+    await sleep(2);
     handleVideoSelection(uniqueItem);
-    setTimeout(() => {
-      postVideo(video);
-    }, 500);
-    // await postVideo(video);
-
-    // make get request to video
+    await sleep(2);
+    await postVideo(video);
     let allVideos = await getAllVideos();
     let lastVideoPosted = await allVideos[allVideos.length - 1];
-
-    // make put request to playlist, then insert unique video id
     let arr = playlist[0]?.videos;
     arr.push(lastVideoPosted._id);
     const addVideoId = { videos: arr };
@@ -104,9 +107,7 @@ function Video() {
                 <p className="video-channel-name">
                   {search.snippet.channelTitle}
                 </p>
-                <div className="video-metadata">
-                  <span>12k views</span>-<span>1 week ago</span>
-                </div>
+                <div className="video-metadata"></div>
               </div>
             </div>
             <form>
