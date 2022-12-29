@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
+
+.all-playlists-body {
+  width: 100%;
+  background: linear-gradient(45deg, rgb(74, 81, 162), rgb(6, 124, 241));
+  padding-bottom: 8vh;
+}
+
+.h2-all-playlists {
+  font-size: 25px;
+  color: #fff;
+  font-family: "Sansita Swashed", cursive;
+}
+
+.all-playlists-container {
+  display: grid;
+  grid-template-columns: 32% 32% 32%;
+  grid-template-rows: 32% 32% 32%;
+  grid-gap: 1rem;
+  /* overflow-y: auto; */
+}
+
+.all-playlist-playlist {
+  color: #fff;
+  /* border-radius: 50px;
+  border-style: dotted;
+  border-color: black; */
+  padding: 20px;
+  font-size: 150%;
+}
+
+.all-playlists-image {
+  max-width: 100%;
+  max-height: 100%;
+  overflow-x: auto;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.all-playlist-name {
+  font-size: 15px;
+}
+
+.all-playlist-tag {
+  font-size: 10px;
+}

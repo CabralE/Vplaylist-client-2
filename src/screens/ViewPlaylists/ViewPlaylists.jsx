@@ -1,3 +1,4 @@
+import "./ViewPlaylists.css";
 import { allPlaylists } from "../../services/playlists";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -24,21 +25,37 @@ function AllPlaylists() {
 
   const loaded = () => {
     const playlistData = playlists.map((playlist, index) => (
-      <div key={playlist._id} className="playlist">
-        <Link to={`/playlist/${playlist._id}`}>
-          <h1>{playlist.playlistName}</h1>
+      <div key={playlist._id} className="all-playlist-playlist">
+        <Link to={`/playlist/${playlist._id}`} className="all-playlist-link">
+          <img
+            src={
+              playlist.image.length > 10
+                ? playlist.image
+                : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+            }
+            alt={playlist.playlistName}
+            className="all-playlists-image"
+          />
+
+          <h3 className="all-playlist-name">{playlist.playlistName}</h3>
+
+          <p className="all-playlist-tag">{playlist.playlistTag}</p>
         </Link>
-        <img src={playlist.image} alt={playlist.playlistName} />
       </div>
     ));
-    return <div className="allPlaylistsContainer">{playlistData}</div>;
+    return (
+      <div className="all-playlists-container">
+        {playlistData}
+        {playlistData}
+      </div>
+    );
   };
 
   return (
-    <>
-      <h1>All of the playlists</h1>
+    <div className="all-playlists-body">
+      <h2 className="h2-all-playlists">All playlists</h2>
       {playlists !== null ? loaded() : <Loading />}
-    </>
+    </div>
   );
 }
 

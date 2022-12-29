@@ -1,0 +1,19 @@
+#home-page {
+  text-align: left;
+  font-family: Helvetica, Arial, sans-serif;
+  margin: auto;
+  width: 80vw;
+  margin-top: 20px;
+}
+
+#home-page h2 {
+  text-align: center;
+}
+
+article {
+  margin-top: 20px;
+}
+
+li {
+  text-decoration: double;
+}

@@ -1,17 +1,77 @@
-.wrapper {
-  display: grid;
-  grid-template-columns: 200px 200px 200px 200px 200px 200px;
-  justify-content: center;
-  align-items: center;
-  grid-gap: 20px;
-  background-color: #fff;
-  color: #444;
+@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
+
+.user-playlist-body {
+  width: 100%;
+  background: linear-gradient(45deg, rgb(74, 81, 162), rgb(6, 124, 241));
+  height: 90vh;
 }
 
-.playlist {
-  background-color: #444;
+.h2-user-playlists {
+  font-size: 25px;
   color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  font-size: 150%;
+  font-family: "Sansita Swashed", cursive;
+}
+
+.user-playlist-container {
+  display: grid;
+  grid-template-columns: 32% 32% 32%;
+  grid-template-rows: 32% 32% 32%;
+  grid-gap: 1rem;
+  /* grid-template-areas:
+    "image image"
+    "image image"
+    "name name"
+    "tag tag"
+    "edit-btn edit-btn"
+    "delete-btn delete-btn"; */
+
+  /* grid-template-columns: 60%; */
+  /* grid-template-rows: 100px 1fr 80px 1fr 70px 1fr 60px 1fr 50px 1fr 50px; */
+}
+
+.user-playlists-playlist {
+  border-bottom-color: blue;
+  border-left-color: blue;
+  border-right-color: red;
+  border-top-color: red;
+}
+
+.user-playlist-image {
+  max-width: 100%;
+  max-height: 100%;
+  overflow-x: auto;
+  object-fit: cover;
+  grid-area: image;
+}
+
+.user-playlist-name {
+  grid-area: name;
+  font-size: 15px;
+}
+
+.user-playlist-tag {
+  grid-area: tag;
+  font-size: 10px;
+}
+
+.user-delete-playlist-btn {
+  grid-area: delete-btn;
+  border-radius: 3px;
+  background-color: red;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.user-edit-playlist-btn {
+  grid-area: edit-btn;
+  border-radius: 3px;
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
 }
