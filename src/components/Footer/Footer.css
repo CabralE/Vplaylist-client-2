@@ -6,6 +6,10 @@ ul {
   margin: auto;
 }
 
+li {
+  list-style: none;
+}
+
 @media (min-width: 500px) {
   ul {
     grid-auto-flow: column;

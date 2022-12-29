@@ -11,6 +11,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "../../services/users";
+import { palette, style } from "@mui/system";
 
 function NavBar() {
   let navigate = useNavigate();
@@ -69,7 +70,7 @@ function NavBar() {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} style={{ backgroundColor: "#662E9B" }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -78,11 +79,9 @@ function NavBar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          ></IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            EC
+            Vidster
           </Typography>
           <Button>
             <NavLink to="/" style={{ textDecoration: "none" }}>

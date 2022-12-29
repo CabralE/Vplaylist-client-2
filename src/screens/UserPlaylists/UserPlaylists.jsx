@@ -32,7 +32,7 @@ function UserPlaylists() {
     } else if (usersPlaylists === false) {
       navigate("/createplaylist", { replace: true });
     } else {
-      deletePlaylist(id);
+      await deletePlaylist(id);
       navigate("/", { replace: true });
     }
   };
@@ -49,7 +49,7 @@ function UserPlaylists() {
     let userPlaylists = user.playlists;
     const arr = userPlaylists.map((playlist, index) => {
       return (
-        <div className="playlist" key={index}>
+        <div className="user-playlists-playlist" key={index}>
           <Link to={`/playlist/${playlist._id}`}>
             <img
               width="100px"
@@ -59,33 +59,35 @@ function UserPlaylists() {
                   ? "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
                   : playlist.image
               }
+              className="user-playlist-image"
             />
-            <p>{playlist.playlistName}</p>
-            <p>{playlist.playlistTag}</p>
+            <h3 className="user-playlist-name">{playlist.playlistName}</h3>
+            <p className="user-playlist-tag">{playlist.playlistTag}</p>
           </Link>
-          <button className="" onClick={() => handleDelete(playlist._id)}>
-            Delete Playlist
+          <button
+            className="user-delete-playlist-btn"
+            onClick={() => handleDelete(playlist._id)}
+          >
+            Delete
           </button>
-          <button className="" onClick={() => handleEdit(playlist._id)}>
-            Edit Playlist
+          <button
+            className="user-edit-playlist-btn"
+            onClick={() => handleEdit(playlist._id)}
+          >
+            Edit
           </button>
         </div>
       );
     });
 
-    return (
-      <>
-        <h2>{user.username}'s playlists</h2>
-        <div className="wrapper">{arr}</div>
-      </>
-    );
+    return <div className="user-playlist-container">{arr}</div>;
   };
 
   return (
-    <>
-      <h1>This will be the user's playlists</h1>
+    <div className="user-playlist-body">
+      <h2 className="h2-user-playlists">{user?.username}'s playlists</h2>
       {user ? loaded() : <Loading />}
-    </>
+    </div>
   );
 }
 
